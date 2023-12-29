@@ -180,10 +180,10 @@ class SubtitleExtractor:
         if self.use_vsf:
             # 如果使用了vsf提取字幕，则使用vsf的字幕生成方法
             self.generate_subtitle_file_vsf()
-        else:
+         else:
             # 如果未使用vsf提取字幕，则使用常规字幕生成方法
             self.generate_subtitle_file()
-        if config.WORD_SEGMENTATION:
+         if config.WORD_SEGMENTATION:
             reformat.execute(os.path.join(os.path.splitext(self.video_path)[0] + '.srt'), config.REC_CHAR_TYPE)
         print(config.interface_config['Main']['FinishGenerateSub'], f"{round(time.time() - start_time, 2)}s")
         self.update_progress(ocr=100, frame_extract=100)
