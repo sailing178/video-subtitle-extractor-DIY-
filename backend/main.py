@@ -182,12 +182,15 @@ class SubtitleExtractor:
             self.generate_subtitle_file_vsf()
         else:
             # 如果未使用vsf提取字幕，则使用常规字幕生成方法
-            self.generate_subtitle_file()
-        if config.WORD_SEGMENTATION:
-            reformat.execute(os.path.join(os.path.splitext(self.video_path)[0] + '.srt'), config.REC_CHAR_TYPE)
-        print(config.interface_config['Main']['FinishGenerateSub'], f"{round(time.time() - start_time, 2)}s")
+srt_filename = os.path.join('/kaggle/working/', os.path.splitext(os.path.basename(self.video_path))[0] + '.srt')
+
+self.generate_subtitle_file(srt_filename)
+       if config.WORD_SEGMENTATION:
+     reformat.execute(srt_filename, config.REC_CHAR_TYPE)
+     print(config.interface_config['Main']['FinishGenerateSub'], f"{round(time.time() - start_time, 2)}s")
         self.update_progress(ocr=100, frame_extract=100)
         self.isFinished = True
+
         # 删除缓存文件
         self.empty_cache()
         self.lock.release()
@@ -991,4 +994,3 @@ class SubtitleExtractor:
         # 开启线程负责更新OCR进度
         Thread(target=get_ocr_progress, daemon=True).start()
         return process
-
