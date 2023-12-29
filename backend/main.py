@@ -93,7 +93,8 @@ class SubtitleExtractor:
         # 定义是否使用vsf提取字幕帧
         self.use_vsf = False
         # 定义vsf的字幕输出路径
-        self.vsf_subtitle = os.path.join(self.subtitle_output_dir, 'raw_vsf.srt')
+       self.subtitle_output_dir = '/kaggle/working/'
+       self.vsf_subtitle = os.path.join(self.subtitle_output_dir, 'raw_vsf.srt')
         # 提取的原始字幕文本存储路径
         self.raw_subtitle_path = os.path.join(self.subtitle_output_dir, 'raw.txt')
         # 自定义ocr对象
