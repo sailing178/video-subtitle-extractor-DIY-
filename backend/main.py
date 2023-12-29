@@ -992,16 +992,3 @@ class SubtitleExtractor:
         Thread(target=get_ocr_progress, daemon=True).start()
         return process
 
-
-if __name__ == '__main__':
-    multiprocessing.set_start_method("spawn")
-    # 示例视频路径列表
-    video_paths = ['/kaggle/input/heaven/1.mp4', '/kaggle/input/heaven/2.mp4', '/kaggle/input/heaven/3.mp4']
-    # 预设的字幕区域坐标
-    subtitle_area = (824, 1023, 96, 1824)
-    # 对每个视频路径进行处理
-    for video_path in video_paths:
-        # 新建字幕提取对象
-        se = SubtitleExtractor(video_path, subtitle_area)
-        # 开始提取字幕
-        se.run()
