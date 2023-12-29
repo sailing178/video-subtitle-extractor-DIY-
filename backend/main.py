@@ -93,8 +93,7 @@ class SubtitleExtractor:
         # 定义是否使用vsf提取字幕帧
         self.use_vsf = False
         # 定义vsf的字幕输出路径
-       self.subtitle_output_dir = '/kaggle/working/'
-       self.vsf_subtitle = os.path.join(self.subtitle_output_dir, 'raw_vsf.srt')
+        self.vsf_subtitle = os.path.join(self.subtitle_output_dir, 'raw_vsf.srt')
         # 提取的原始字幕文本存储路径
         self.raw_subtitle_path = os.path.join(self.subtitle_output_dir, 'raw.txt')
         # 自定义ocr对象
@@ -619,9 +618,10 @@ class SubtitleExtractor:
                 final_subtitles.append(sub)
                 continue
 
-        srt_filename = os.path.join(os.path.splitext(self.video_path)[0] + '.srt')
+        srt_filename = os.path.join('/kaggle/working/', os.path.splitext(self.video_path)[0] + '.srt')
         pysrt.SubRipFile(final_subtitles).save(srt_filename, encoding='utf-8')
         print(f"[VSF]{config.interface_config['Main']['SubLocation']} {srt_filename}")
+
 
     def _detect_watermark_area(self):
         """
@@ -994,18 +994,3 @@ class SubtitleExtractor:
         return process
 
 
-if __name__ == '__main__':
-    multiprocessing.set_start_method("spawn")
-    # 提示用户输入视频路径
-    video_path = input(f"{config.interface_config['Main']['InputVideo']}").strip()
-    # 提示用户输入字幕区域
-    try:
-        y_min, y_max, x_min, x_max = map(int, input(
-            f"{config.interface_config['Main']['ChooseSubArea']} (ymin ymax xmin xmax)：").split())
-        subtitle_area = (y_min, y_max, x_min, x_max)
-    except ValueError as e:
-        subtitle_area = None
-    # 新建字幕提取对象
-    se = SubtitleExtractor(video_path, subtitle_area)
-    # 开始提取字幕
-    se.run()
